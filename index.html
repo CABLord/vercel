@@ -1,25 +1,770 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello World</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        display: grid;
-        place-items: center;
-        min-height: 100vh;
-        margin: 0;
-        background: #0f172a;
-        color: white;
-      }
-      h1 {
-        font-size: 3rem;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Hello World 👋</h1>
-  </body>
-</html>
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  Phone,
+  Mail,
+  MessageCircle,
+  MapPin,
+  Plane,
+  Train,
+  Briefcase,
+  ShoppingBag,
+  FileText,
+  Mountain,
+  ShieldCheck,
+  Car,
+  Clock3,
+  ChevronRight,
+  Star,
+  Sparkles,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+
+const phoneDisplay = "+39 329 323 0211";
+const phoneLink = "tel:+393293230211";
+const whatsappLink = "https://wa.me/393293230211";
+const email = "info@taxi-james.it";
+const emailLink = "mailto:info@taxi-james.it";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+      delay: i * 0.08,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
+};
+
+const services = [
+  {
+    icon: Plane,
+    title: "Airport Transfers",
+    text: "Quiet, punctual connections from Bressanone/Brixen to Bolzano, Innsbruck, Verona, Bergamo, Munich, Malpensa, Linate, Venice and more.",
+  },
+  {
+    icon: Train,
+    title: "Hotels & Railway Stations",
+    text: "Smooth arrival and departure coordination for hotels, stations and onward travel across South Tyrol and beyond.",
+  },
+  {
+    icon: Mountain,
+    title: "Private Tours & Excursions",
+    text: "Tailored rides into the Dolomites, with flexible day planning for scenic routes, alpine villages and curated experiences.",
+  },
+  {
+    icon: Briefcase,
+    title: "Business Travel",
+    text: "Dependable professional transfers that keep meetings, schedules and clients moving without friction.",
+  },
+  {
+    icon: ShoppingBag,
+    title: "Shopping & City Trips",
+    text: "Comfortable transport for local days out, appointments, boutique stops and practical errands with a premium touch.",
+  },
+  {
+    icon: FileText,
+    title: "Luggage & Document Delivery",
+    text: "Fast, direct handling for urgent luggage and documents when timing matters and peace of mind matters more.",
+  },
+];
+
+const coverage = [
+  "Valle Isarco",
+  "Val Pusteria",
+  "Val Badia",
+  "Val Gardena",
+  "Lago di Braies",
+  "Plose",
+  "Bolzano",
+  "Innsbruck",
+  "Verona",
+  "Bergamo",
+  "Munich",
+  "Malpensa",
+  "Linate",
+  "Venice",
+];
+
+const trustPoints = [
+  {
+    icon: MapPin,
+    title: "Locally rooted",
+    text: "Trusted service based in Bressanone/Brixen.",
+  },
+  {
+    icon: Sparkles,
+    title: "Without territorial limits",
+    text: "Local, national and international transfers on request.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Professionally handled",
+    text: "Professional collaborators and carefully managed service.",
+  },
+  {
+    icon: Car,
+    title: "Comfort by design",
+    text: "Clean, regularly inspected vehicles for every journey.",
+  },
+  {
+    icon: Clock3,
+    title: "Advance-planned flexibility",
+    text: "Night and holiday service available by prior booking.",
+  },
+];
+
+const process = [
+  {
+    number: "01",
+    title: "Share your route",
+    text: "Send your pickup, destination, date and timing by call, WhatsApp, email or form.",
+  },
+  {
+    number: "02",
+    title: "Receive a clear confirmation",
+    text: "Get a fast response, a tailored quote if needed, and calm certainty before you travel.",
+  },
+  {
+    number: "03",
+    title: "Travel beautifully organized",
+    text: "From first message to final arrival, the journey feels smooth, professional and personal.",
+  },
+];
+
+const faqs = [
+  {
+    q: "Which transfers can I book?",
+    a: "Airport transfers, hotel and railway station transfers, private tours and excursions, shopping and business trips, event and wedding transport, plus urgent luggage or document delivery.",
+  },
+  {
+    q: "Where do you operate?",
+    a: "Taxi James is based in Bressanone/Brixen and handles local, national and international transfers without territorial limits on request.",
+  },
+  {
+    q: "Do you offer night or holiday service?",
+    a: "Yes — advance-booked service is available for night hours and holidays.",
+  },
+  {
+    q: "How can I book?",
+    a: "You can book directly by phone, WhatsApp, email or the contact form below.",
+  },
+];
+
+function SectionLabel({ children }) {
+  return (
+    <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-stone-300/80 bg-white/70 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-stone-600 backdrop-blur">
+      <span className="h-1.5 w-1.5 rounded-full bg-emerald-700/80" />
+      {children}
+    </div>
+  );
+}
+
+function RouteLine() {
+  return (
+    <svg viewBox="0 0 680 96" className="h-20 w-full text-stone-400/70">
+      <motion.path
+        d="M12 64 C 120 18, 210 18, 290 52 S 470 94, 668 28"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeDasharray="8 10"
+        initial={{ pathLength: 0, opacity: 0.4 }}
+        whileInView={{ pathLength: 1, opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+      />
+      {[
+        { x: 12, y: 64 },
+        { x: 170, y: 27 },
+        { x: 335, y: 56 },
+        { x: 520, y: 75 },
+        { x: 668, y: 28 },
+      ].map((dot, idx) => (
+        <motion.circle
+          key={idx}
+          cx={dot.x}
+          cy={dot.y}
+          r="4"
+          fill="currentColor"
+          initial={{ scale: 0, opacity: 0 }}
+          whileInView={{ scale: 1, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45, delay: 0.2 + idx * 0.13 }}
+        />
+      ))}
+    </svg>
+  );
+}
+
+export default function TaxiJamesLandingPage() {
+  return (
+    <div className="min-h-screen bg-[#F5F1EA] text-stone-900 antialiased selection:bg-stone-300 selection:text-stone-900">
+      <div className="fixed inset-x-0 top-0 z-50 border-b border-stone-200/70 bg-[#F5F1EA]/85 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+          #top
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-stone-900 text-sm font-semibold tracking-[0.18em] text-[#F5F1EA] shadow-sm">
+              TJ
+            </div>
+            <div>
+              <div className="text-sm font-medium uppercase tracking-[0.22em] text-stone-500">Brixen · Bressanone</div>
+              <div className="text-base font-semibold text-stone-900">Taxi James</div>
+            </div>
+          </a>
+
+          <div className="hidden items-center gap-8 md:flex">
+            {[
+              ["Services", "#services"],
+              ["Coverage", "#coverage"],
+              ["Why Us", "#why"],
+              ["Contact", "#contact"],
+            ].map(([label, href]) => (
+              <a key={label} href={href} className="text-sm text-stone-600 transition hover:text-stone-900">
+                {label}
+              </a>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Button asChild variant="outline" className="hidden rounded-full border-stone-300 bg-white/70 text-stone-800 hover:bg-white md:inline-flex">
+              <a href={whatsappLink} target="_blank" rel="noreferrer">
+                <MessageCircle className="mr-2 h-4 w-4" /> WhatsApp
+              </a>
+            </Button>
+            <Button asChild className="rounded-full bg-stone-900 text-[#F5F1EA] hover:bg-stone-800">
+              <a href="#contact">Book now</a>
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <main id="top" className="relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute left-[-5%] top-20 h-72 w-72 rounded-full bg-[#9DB7BE]/20 blur-3xl" />
+          <div className="absolute right-[-4%] top-[22rem] h-80 w-80 rounded-full bg-[#B97A5B]/10 blur-3xl" />
+          <div className="absolute left-[20%] top-[55rem] h-96 w-96 rounded-full bg-[#5E7566]/10 blur-3xl" />
+        </div>
+
+        <section className="relative mx-auto max-w-7xl px-4 pb-20 pt-32 sm:px-6 lg:px-8 lg:pb-28 lg:pt-36">
+          <div className="grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
+            <div>
+              <motion.div initial="hidden" animate="visible" variants={fadeUp}>
+                <SectionLabel>Refined Alpine mobility</SectionLabel>
+              </motion.div>
+
+              <motion.h1
+                initial="hidden"
+                animate="visible"
+                custom={1}
+                variants={fadeUp}
+                className="max-w-4xl text-4xl font-semibold leading-tight tracking-[-0.03em] text-stone-900 sm:text-5xl lg:text-7xl"
+              >
+                Quietly taking you further from Bressanone.
+              </motion.h1>
+
+              <motion.p
+                initial="hidden"
+                animate="visible"
+                custom={2}
+                variants={fadeUp}
+                className="mt-6 max-w-2xl text-base leading-8 text-stone-600 sm:text-lg"
+              >
+                A single trusted point of contact for local, national and international transfers — airport pickups, hotel and railway connections, private tours, business travel, event transport and urgent deliveries, all handled with calm efficiency and personal care.
+              </motion.p>
+
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                custom={3}
+                variants={fadeUp}
+                className="mt-8 flex flex-col gap-3 sm:flex-row"
+              >
+                <Button asChild size="lg" className="rounded-full bg-stone-900 px-7 text-[#F5F1EA] hover:bg-stone-800">
+                  <a href={phoneLink}>
+                    <Phone className="mr-2 h-4 w-4" /> Call now
+                  </a>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="rounded-full border-stone-300 bg-white/80 px-7 text-stone-900 hover:bg-white">
+                  <a href={whatsappLink} target="_blank" rel="noreferrer">
+                    <MessageCircle className="mr-2 h-4 w-4" /> WhatsApp booking
+                  </a>
+                </Button>
+              </motion.div>
+
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                custom={4}
+                variants={fadeUp}
+                className="mt-8 flex flex-wrap gap-6 text-sm text-stone-600"
+              >
+                <a href={phoneLink} className="inline-flex items-center gap-2 transition hover:text-stone-900">
+                  <Phone className="h-4 w-4" /> {phoneDisplay}
+                </a>
+                <a href={emailLink} className="inline-flex items-center gap-2 transition hover:text-stone-900">
+                  <Mail className="h-4 w-4" /> {email}
+                </a>
+                <a href="#contact" className="inline-flex items-center gap-2 transition hover:text-stone-900">
+                  <ChevronRight className="h-4 w-4" /> Request a quote
+                </a>
+              </motion.div>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="relative"
+            >
+              <div className="rounded-[2rem] border border-stone-200/80 bg-white/70 p-4 shadow-[0_20px_70px_rgba(60,40,20,0.08)] backdrop-blur-xl sm:p-6">
+                <div className="relative overflow-hidden rounded-[1.6rem] bg-[linear-gradient(160deg,#f7f2ea_0%,#eae1d5_38%,#ddd0bf_100%)] p-6 sm:p-8">
+                  <div className="absolute inset-0 opacity-30 [background-image:radial-gradient(circle_at_15%_20%,rgba(94,117,102,0.26),transparent_28%),radial-gradient(circle_at_85%_15%,rgba(157,183,190,0.32),transparent_24%),radial-gradient(circle_at_55%_82%,rgba(185,122,91,0.18),transparent_22%)]" />
+                  <div className="relative z-10">
+                    <div className="mb-8 flex items-center justify-between rounded-2xl border border-white/60 bg-white/55 px-4 py-3 backdrop-blur">
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.18em] text-stone-500">Today’s rhythm</p>
+                        <p className="mt-1 text-sm font-medium text-stone-800">Arrival · Transfer · Excursion · Return</p>
+                      </div>
+                      <div className="rounded-full bg-[#5E7566]/10 px-3 py-1 text-xs font-medium text-[#45584c]">
+                        Seamless
+                      </div>
+                    </div>
+
+                    <div className="rounded-[1.4rem] border border-white/70 bg-white/60 p-5 shadow-sm backdrop-blur">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-xs uppercase tracking-[0.18em] text-stone-500">Trusted local service</p>
+                          <h3 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-stone-900">From arrival to destination, calmly handled.</h3>
+                        </div>
+                        <div className="hidden h-14 w-14 items-center justify-center rounded-2xl bg-stone-900 text-[#F5F1EA] sm:flex">
+                          <Car className="h-6 w-6" />
+                        </div>
+                      </div>
+
+                      <div className="mt-7">
+                        <RouteLine />
+                      </div>
+
+                      <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                        {[
+                          "Airport pickup",
+                          "Hotel transfer",
+                          "Railway connection",
+                          "Private excursion",
+                        ].map((item) => (
+                          <div key={item} className="rounded-2xl border border-stone-200/70 bg-[#F5F1EA]/80 px-4 py-3 text-sm text-stone-700">
+                            {item}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+            {trustPoints.map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <motion.div key={item.title} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp}>
+                  <Card className="h-full rounded-[1.6rem] border-stone-200/80 bg-white/70 shadow-[0_10px_30px_rgba(60,40,20,0.04)] backdrop-blur">
+                    <CardContent className="p-6">
+                      <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-stone-900 text-[#F5F1EA]">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <h3 className="text-lg font-semibold tracking-[-0.02em] text-stone-900">{item.title}</h3>
+                      <p className="mt-2 text-sm leading-7 text-stone-600">{item.text}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+
+        <section id="services" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} variants={fadeUp} className="max-w-3xl">
+            <SectionLabel>Services</SectionLabel>
+            <h2 className="text-3xl font-semibold tracking-[-0.03em] text-stone-900 sm:text-5xl">
+              Every movement, thoughtfully handled.
+            </h2>
+            <p className="mt-5 text-base leading-8 text-stone-600 sm:text-lg">
+              More than transportation — a composed journey service for guests, residents, business travelers and special occasions.
+            </p>
+          </motion.div>
+
+          <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {services.map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <motion.div key={item.title} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }} variants={fadeUp}>
+                  <Card className="group h-full rounded-[1.8rem] border-stone-200/80 bg-white/70 shadow-[0_12px_35px_rgba(60,40,20,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(60,40,20,0.08)]">
+                    <CardContent className="p-7">
+                      <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#5E7566]/10 text-[#45584c] transition-colors group-hover:bg-stone-900 group-hover:text-[#F5F1EA]">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <h3 className="text-xl font-semibold tracking-[-0.02em] text-stone-900">{item.title}</h3>
+                      <p className="mt-3 text-sm leading-7 text-stone-600">{item.text}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+
+        <section id="coverage" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+          <div className="grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} variants={fadeUp}>
+              <SectionLabel>Coverage</SectionLabel>
+              <h2 className="text-3xl font-semibold tracking-[-0.03em] text-stone-900 sm:text-5xl">
+                Local knowledge. Regional depth. International reach.
+              </h2>
+              <p className="mt-5 text-base leading-8 text-stone-600 sm:text-lg">
+                From Valle Isarco to major airports and from railway arrivals to Dolomite excursions, Taxi James connects familiar places and far-reaching plans with equal calm.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                {coverage.map((place, i) => (
+                  <motion.div
+                    key={place}
+                    custom={i}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.25 }}
+                    variants={fadeUp}
+                    className="rounded-full border border-stone-300/80 bg-white/80 px-4 py-2 text-sm text-stone-700 shadow-sm"
+                  >
+                    {place}
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="rounded-[2rem] border border-stone-200/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.72),rgba(255,255,255,0.55))] p-5 shadow-[0_20px_60px_rgba(60,40,20,0.06)]"
+            >
+              <div className="rounded-[1.6rem] border border-stone-200/70 bg-[#EFE7DB] p-6 sm:p-8">
+                <div className="mb-8 flex items-center justify-between">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.18em] text-stone-500">Selected destinations</p>
+                    <h3 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-stone-900">A flexible route network centered on Brixen.</h3>
+                  </div>
+                  <div className="rounded-full bg-white/80 px-3 py-1 text-xs font-medium text-stone-700 shadow-sm">
+                    By request
+                  </div>
+                </div>
+
+                <div className="relative overflow-hidden rounded-[1.6rem] bg-white/80 p-5 shadow-inner">
+                  <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(to_right,rgba(120,110,95,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(120,110,95,0.08)_1px,transparent_1px)] [background-size:34px_34px]" />
+                  <div className="relative min-h-[340px]">
+                    {[
+                      { name: "Brixen", top: "45%", left: "39%", primary: true },
+                      { name: "Bolzano", top: "58%", left: "31%" },
+                      { name: "Innsbruck", top: "24%", left: "28%" },
+                      { name: "Munich", top: "10%", left: "54%" },
+                      { name: "Verona", top: "79%", left: "46%" },
+                      { name: "Venice", top: "82%", left: "73%" },
+                      { name: "Malpensa", top: "74%", left: "10%" },
+                      { name: "Val Gardena", top: "39%", left: "54%" },
+                      { name: "Lago di Braies", top: "30%", left: "67%" },
+                      { name: "Plose", top: "34%", left: "43%" },
+                    ].map((node, i) => (
+                      <motion.div
+                        key={node.name}
+                        initial={{ opacity: 0, scale: 0.85 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.45, delay: i * 0.06 }}
+                        className="absolute"
+                        style={{ top: node.top, left: node.left }}
+                      >
+                        <div className={`group relative -translate-x-1/2 -translate-y-1/2 ${node.primary ? "" : ""}`}>
+                          <div className={`absolute left-1/2 top-1/2 h-20 w-px -translate-x-1/2 -translate-y-1/2 bg-stone-300/50 ${node.primary ? "hidden" : "block"}`} />
+                          <div className={`relative rounded-full px-3 py-2 text-xs font-medium shadow-sm backdrop-blur transition-all duration-300 group-hover:scale-105 ${node.primary ? "bg-stone-900 text-[#F5F1EA]" : "border border-stone-300/80 bg-white/90 text-stone-800"}`}>
+                            {node.name}
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        <section id="why" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} variants={fadeUp}>
+              <SectionLabel>Why Taxi James</SectionLabel>
+              <h2 className="text-3xl font-semibold tracking-[-0.03em] text-stone-900 sm:text-5xl">
+                Dependability you can feel before the ride begins.
+              </h2>
+              <p className="mt-5 text-base leading-8 text-stone-600 sm:text-lg">
+                The experience is designed to feel beautifully organized: direct communication, flexible planning, clean vehicles and service that stays personal from first message to final arrival.
+              </p>
+            </motion.div>
+
+            <div className="grid gap-5 md:grid-cols-3">
+              {[
+                {
+                  title: "Professional network",
+                  text: "Supported by experienced collaborators for consistent, reliable service across different routes and travel needs.",
+                },
+                {
+                  title: "Vehicle care",
+                  text: "Clean, regularly inspected vehicles create a feeling of order, comfort and confidence before the journey even begins.",
+                },
+                {
+                  title: "Flexible planning",
+                  text: "Tailored coverage, long-distance requests and advance-booked night or holiday service create real travel freedom.",
+                },
+              ].map((item, i) => (
+                <motion.div key={item.title} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} variants={fadeUp}>
+                  <Card className="h-full rounded-[1.7rem] border-stone-200/80 bg-white/70 shadow-[0_12px_35px_rgba(60,40,20,0.05)]">
+                    <CardContent className="p-7">
+                      <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#9DB7BE]/20 text-stone-900">
+                        <Star className="h-5 w-5" />
+                      </div>
+                      <h3 className="text-xl font-semibold tracking-[-0.02em] text-stone-900">{item.title}</h3>
+                      <p className="mt-3 text-sm leading-7 text-stone-600">{item.text}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+          <div className="rounded-[2rem] border border-stone-200/80 bg-[linear-gradient(135deg,rgba(94,117,102,0.08),rgba(157,183,190,0.12),rgba(255,255,255,0.7))] p-6 shadow-[0_18px_50px_rgba(60,40,20,0.05)] sm:p-8 lg:p-10">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} variants={fadeUp} className="max-w-3xl">
+              <SectionLabel>Simple process</SectionLabel>
+              <h2 className="text-3xl font-semibold tracking-[-0.03em] text-stone-900 sm:text-5xl">
+                Book in the way that feels easiest.
+              </h2>
+              <p className="mt-5 text-base leading-8 text-stone-600 sm:text-lg">
+                Fast direct contact for urgent travel, thoughtful planning for excursions, weddings, business trips and airport transfers.
+              </p>
+            </motion.div>
+
+            <div className="mt-10 grid gap-5 lg:grid-cols-3">
+              {process.map((step, i) => (
+                <motion.div key={step.number} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} variants={fadeUp}>
+                  <Card className="h-full rounded-[1.8rem] border-stone-200/80 bg-white/75">
+                    <CardContent className="p-7">
+                      <div className="text-sm font-semibold tracking-[0.18em] text-stone-500">{step.number}</div>
+                      <h3 className="mt-3 text-xl font-semibold tracking-[-0.02em] text-stone-900">{step.title}</h3>
+                      <p className="mt-3 text-sm leading-7 text-stone-600">{step.text}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeUp}>
+              <SectionLabel>Contact & booking</SectionLabel>
+              <h2 className="text-3xl font-semibold tracking-[-0.03em] text-stone-900 sm:text-5xl">
+                Request a quote, send a message, or book immediately.
+              </h2>
+              <p className="mt-5 max-w-xl text-base leading-8 text-stone-600 sm:text-lg">
+                Whether you need an airport pickup, a station transfer, a Dolomite excursion, event transport or a fast delivery, reaching out should feel effortless.
+              </p>
+
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                {[
+                  {
+                    title: "Call directly",
+                    value: phoneDisplay,
+                    href: phoneLink,
+                    icon: Phone,
+                  },
+                  {
+                    title: "WhatsApp",
+                    value: "Send a quick booking message",
+                    href: whatsappLink,
+                    icon: MessageCircle,
+                    external: true,
+                  },
+                  {
+                    title: "Email",
+                    value: email,
+                    href: emailLink,
+                    icon: Mail,
+                  },
+                  {
+                    title: "Coverage",
+                    value: "Local, national & international",
+                    href: "#coverage",
+                    icon: MapPin,
+                  },
+                ].map((item, i) => {
+                  const Icon = item.icon;
+                  return (
+                    <motion.a
+                      key={item.title}
+                      custom={i}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true, amount: 0.25 }}
+                      variants={fadeUp}
+                      href={item.href}
+                      target={item.external ? "_blank" : undefined}
+                      rel={item.external ? "noreferrer" : undefined}
+                      className="group rounded-[1.7rem] border border-stone-200/80 bg-white/75 p-5 shadow-[0_12px_35px_rgba(60,40,20,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(60,40,20,0.08)]"
+                    >
+                      <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-stone-900 text-[#F5F1EA]">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <div className="text-sm uppercase tracking-[0.18em] text-stone-500">{item.title}</div>
+                      <div className="mt-2 text-base font-semibold text-stone-900">{item.value}</div>
+                    </motion.a>
+                  );
+                })}
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <Card className="rounded-[2rem] border-stone-200/80 bg-white/75 shadow-[0_20px_60px_rgba(60,40,20,0.06)]">
+                <CardContent className="p-6 sm:p-8">
+                  <div className="mb-6 flex items-center justify-between">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.18em] text-stone-500">Contact form</p>
+                      <h3 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-stone-900">Tell us about your journey.</h3>
+                    </div>
+                    <div className="hidden rounded-full bg-[#5E7566]/10 px-3 py-1 text-xs font-medium text-[#45584c] sm:block">
+                      Peace of mind
+                    </div>
+                  </div>
+
+                  <form className="space-y-4">
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div>
+                        <label className="mb-2 block text-sm text-stone-600">Name</label>
+                        <Input className="h-12 rounded-2xl border-stone-300 bg-[#F5F1EA]/70" placeholder="Your name" />
+                      </div>
+                      <div>
+                        <label className="mb-2 block text-sm text-stone-600">Email</label>
+                        <Input className="h-12 rounded-2xl border-stone-300 bg-[#F5F1EA]/70" placeholder="your@email.com" type="email" />
+                      </div>
+                    </div>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div>
+                        <label className="mb-2 block text-sm text-stone-600">Pickup</label>
+                        <Input className="h-12 rounded-2xl border-stone-300 bg-[#F5F1EA]/70" placeholder="Airport, hotel, station..." />
+                      </div>
+                      <div>
+                        <label className="mb-2 block text-sm text-stone-600">Destination</label>
+                        <Input className="h-12 rounded-2xl border-stone-300 bg-[#F5F1EA]/70" placeholder="Where are you going?" />
+                      </div>
+                    </div>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div>
+                        <label className="mb-2 block text-sm text-stone-600">Date & time</label>
+                        <Input className="h-12 rounded-2xl border-stone-300 bg-[#F5F1EA]/70" placeholder="When do you need the transfer?" />
+                      </div>
+                      <div>
+                        <label className="mb-2 block text-sm text-stone-600">Service type</label>
+                        <Input className="h-12 rounded-2xl border-stone-300 bg-[#F5F1EA]/70" placeholder="Airport, excursion, event..." />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="mb-2 block text-sm text-stone-600">Message</label>
+                      <Textarea className="min-h-[140px] rounded-[1.35rem] border-stone-300 bg-[#F5F1EA]/70" placeholder="Share details about passengers, luggage, return transfer, or any special timing." />
+                    </div>
+                    <div className="flex flex-col gap-3 pt-2 sm:flex-row">
+                      <Button type="button" className="rounded-full bg-stone-900 px-7 text-[#F5F1EA] hover:bg-stone-800">
+                        Send request
+                      </Button>
+                      <Button asChild type="button" variant="outline" className="rounded-full border-stone-300 bg-white text-stone-900 hover:bg-[#F5F1EA]">
+                        <a href={whatsappLink} target="_blank" rel="noreferrer">
+                          Message on WhatsApp
+                        </a>
+                      </Button>
+                    </div>
+                  </form>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-28">
+          <div className="grid gap-5 lg:grid-cols-[0.85fr_1.15fr]">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} variants={fadeUp} className="rounded-[2rem] border border-stone-200/80 bg-[linear-gradient(160deg,#ece3d6_0%,#f5f1ea_72%)] p-7 shadow-[0_12px_35px_rgba(60,40,20,0.05)] sm:p-9">
+              <SectionLabel>Final call</SectionLabel>
+              <h2 className="text-3xl font-semibold tracking-[-0.03em] text-stone-900 sm:text-5xl">
+                Travel with complete peace of mind.
+              </h2>
+              <p className="mt-5 max-w-xl text-base leading-8 text-stone-600 sm:text-lg">
+                Quietly efficient, personally attentive and ready when you are — for arrivals, departures, excursions, events and urgent requests.
+              </p>
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                <Button asChild size="lg" className="rounded-full bg-stone-900 px-7 text-[#F5F1EA] hover:bg-stone-800">
+                  <a href={phoneLink}>Book immediately</a>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="rounded-full border-stone-300 bg-white/85 px-7 text-stone-900 hover:bg-white">
+                  <a href={emailLink}>Request a quote</a>
+                </Button>
+              </div>
+            </motion.div>
+
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} variants={fadeUp} className="rounded-[2rem] border border-stone-200/80 bg-white/75 p-7 shadow-[0_12px_35px_rgba(60,40,20,0.05)] sm:p-9">
+              <SectionLabel>FAQ</SectionLabel>
+              <div className="space-y-4">
+                {faqs.map((item) => (
+                  <details key={item.q} className="group rounded-[1.4rem] border border-stone-200/80 bg-[#F5F1EA]/70 p-5 open:bg-white">
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-stone-900 marker:content-none">
+                      {item.q}
+                      <ChevronRight className="h-4 w-4 shrink-0 text-stone-500 transition-transform group-open:rotate-90" />
+                    </summary>
+                    <p className="mt-3 pr-6 text-sm leading-7 text-stone-600">{item.a}</p>
+                  </details>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-stone-200/80 bg-[#F1EBE2]">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1fr_auto] lg:px-8">
+          <div>
+            <div className="text-sm font-medium uppercase tracking-[0.22em] text-stone-500">Taxi James</div>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-stone-600">
+              Refined alpine mobility and concierge-style transfers from Bressanone/Brixen. Direct booking by phone, WhatsApp, email or contact form.
+            </p>
+          </div>
+          <div className="flex flex-col gap-3 text-sm text-stone-700 sm:items-end">
+            <a href={phoneLink} className="transition hover:text-stone-900">{phoneDisplay}</a>
+            <a href={emailLink} className="transition hover:text-stone-900">{email}</a>
+            <a href={whatsappLink} target="_blank" rel="noreferrer" className="transition hover:text-stone-900">WhatsApp booking</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
