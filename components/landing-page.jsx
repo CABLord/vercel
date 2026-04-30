@@ -130,12 +130,14 @@ export default function LandingPage({ locale }) {
     description: t.meta.description
   };
 
-  return (
+  
+return (
     <>
-      #main
-        {t.labels.skip}
-      </a>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <a href="#main" className="skip-link</a>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
       <header className="site-header">
         <div className="container nav-shell">
@@ -148,10 +150,10 @@ export default function LandingPage({ locale }) {
           </a>
 
           <nav className="desktop-nav" aria-label="Primary">
-            <a href="#services">{t.nav[0]}</a>
-            <a href="#destinations">{t.nav[1]}</a>
-            <a href="#why">{t.nav[2]}</a>
-            <a href="#contact">{t.nav[3]}</a>
+            <a href="#services}</a>
+            <a href="#destinations}</a>
+            <a href="#why}</a>
+            <a href="#contact}</a>
           </nav>
 
           <div className="desktop-actions">
