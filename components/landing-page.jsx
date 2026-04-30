@@ -131,15 +131,19 @@ export default function LandingPage({ locale }) {
   };
 
   
+
 return (
     <>
-      <a href="#main" className="skip-link</a>
+      <a href="#main" className="skip-link">
+        {t.labels.skip}
+      </a>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       <header className="site-header">
+
         <div className="container nav-shell">
           <a href={`/${locale}`} className="brand" aria-label="Taxi James home">
             <span className="brand-mark" aria-hidden="true">TJ</span>
